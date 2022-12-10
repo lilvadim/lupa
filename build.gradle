@@ -10,6 +10,12 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    dependencies {
+        implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.5")
+    }
+}
+
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
