@@ -14,4 +14,10 @@ interface Resource {
      * found information written in same graph
      */
     fun performSearch(matchGraph: MatchGraph)
+
+    /**
+     * Executed queries stored here.
+     * It should be used to optimize request avoiding duplicates.
+     */
+    val queryCache: Map<String, String>
 }
