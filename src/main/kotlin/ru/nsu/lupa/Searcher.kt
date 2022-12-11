@@ -1,15 +1,19 @@
 package ru.nsu.lupa
 
+/**
+ * Search runner
+ */
 class Searcher(
+    /**
+     * List of resources to search, order is important
+     */
     val resources: List<Resource>,
+    /**
+     * Known information
+     */
     val initialProfile: Profile
 ) : Runnable {
-
-    var resultProfile = initialProfile
-
     override fun run() {
-        for (resource in resources) {
-            resultProfile = resource.search(resultProfile)
-        }
+
     }
 }
