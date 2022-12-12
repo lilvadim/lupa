@@ -17,4 +17,7 @@ class MatchGraph {
  */
 data class Edge<W, N>(val label: W, val node: N)
 
+/**
+ * Criteria of match
+ */
 enum class MatchCriteria { USERNAME }
