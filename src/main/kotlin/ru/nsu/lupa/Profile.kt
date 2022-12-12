@@ -10,7 +10,7 @@ data class Profile(
     val username: Username? = null,
     val email: Email? = null,
     val phone: PhoneNumber? = null,
-    val bDate: BDate = BDate()
+    val ageData: AgeData = AgeData()
 )
 
 /**
@@ -39,10 +39,11 @@ data class Email(val value: String)
 data class PhoneNumber(val value: String)
 
 /**
- * Date of birth, but some info may be not known,
+ * Date of birth or approximate age (e.g. 29 years old), but some info may be not known,
  * e.g. only year is known, then other properties are null
  */
-data class BDate(
+data class AgeData(
+    val approxAge: Int? = null,
     val birthDay: Int? = null,
     val birthMonth: Int? = null,
     val birthYear: Int? = null,
