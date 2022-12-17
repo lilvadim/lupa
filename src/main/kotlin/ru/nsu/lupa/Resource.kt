@@ -15,9 +15,12 @@ interface Resource {
      */
     fun performSearch(matchGraph: MatchGraph)
 
-    /**
-     * Executed queries stored here.
-     * It should be used to optimize request avoiding duplicates.
-     */
-    val queryCache: Map<String, String>
+    abstract class BaseResource(
+        override val homeUrl: String,
+        /**
+         * Executed queries stored here.
+         * It should be used to optimize request avoiding duplicates.
+         */
+        val queryCache: Map<String, String> = mapOf(),
+    ) : Resource
 }
