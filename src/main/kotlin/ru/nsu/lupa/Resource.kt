@@ -13,7 +13,7 @@ interface Resource {
      * Search for user info using given match graph,
      * found information written in same graph
      */
-    fun performSearch(matchGraph: MatchGraph)
+    fun performSearch(matchGraph: MatchGraph, nameProcessor: NameProcessor = simpleNameProcessor())
 
     abstract class BaseResource(
         override val homeUrl: String,

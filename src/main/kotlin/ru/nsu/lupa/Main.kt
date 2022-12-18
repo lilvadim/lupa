@@ -29,7 +29,11 @@ internal fun main(args: Array<String>) {
         surname = Surname(surname)
     )
 
-    val searcher = Searcher(resources, initialProfile)
+    val matchGraph = MatchGraph().apply {
+        adjacencyList[initialProfile] = mutableListOf()
+    }
 
-    println(searcher.resultProfile)
+    val searcher = Searcher(resources, matchGraph)
+
+    println(searcher.matchGraph)
 }

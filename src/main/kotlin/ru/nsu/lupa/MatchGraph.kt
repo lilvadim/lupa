@@ -7,7 +7,7 @@ data class MatchGraph(
     /**
      * Adjacency list, represented by the map
      */
-    val adjacencyList: Map<Profile, List<Edge<MatchCriteria, Profile>>> = mapOf()
+    val adjacencyList: MutableMap<Profile, MutableList<Edge<MatchCriteria, Profile>>> = mutableMapOf()
 )
 /**
  * Edge
@@ -19,4 +19,4 @@ data class Edge<W, N>(val label: W, val node: N)
 /**
  * Criteria of match
  */
-enum class MatchCriteria { USERNAME }
+enum class MatchCriteria { USERNAME, NAME_SURNAME }

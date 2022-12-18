@@ -7,11 +7,12 @@ import com.vk.api.sdk.httpclient.HttpTransportClient
 import com.vk.api.sdk.objects.UserAuthResponse
 import com.vk.api.sdk.queries.users.UsersSearchQuery
 import ru.nsu.lupa.MatchGraph
+import ru.nsu.lupa.NameProcessor
 import ru.nsu.lupa.Resource
 
 
 class VkSearch : Resource.BaseResource(homeUrl = "https://vk.com/") {
-    override fun performSearch(matchGraph: MatchGraph) {
+    override fun performSearch(matchGraph: MatchGraph, nameProcessor: NameProcessor) {
         val usersSearchQuery = UsersSearchQuery(vkClient, actor)
     }
 
