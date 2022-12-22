@@ -8,7 +8,7 @@ class Searcher(
      * List of resources to search, order is important
      */
     val resources: List<Resource>,
-    val matchGraph: MatchGraph = MatchGraph(),
+    val matchGraph: MatchGraph,
 ) : Runnable {
     override fun run() {
         resources.forEach { it.performSearch(matchGraph) }

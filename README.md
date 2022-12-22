@@ -14,7 +14,7 @@ Person Search API. University project.
  * Search for user info using given match graph,
  * found information written in same graph
  */
-fun performSearch(matchGraph: MatchGraph, nameProcessor: NameProcessor = simpleNameProcessor())
+fun performSearch(matchGraph: MatchGraph)
 ```
 
 В нем передается параметром граф соответствий.

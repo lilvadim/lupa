@@ -1,6 +1,8 @@
 package ru.nsu.lupa
 
-import kotlinx.cli.*
+import kotlinx.cli.ArgParser
+import kotlinx.cli.ArgType
+import kotlinx.cli.required
 import ru.nsu.lupa.res.VkSearch
 
 val resources = listOf(VkSearch())
@@ -29,8 +31,8 @@ internal fun main(args: Array<String>) {
         surname = Surname(surname)
     )
 
-    val matchGraph = MatchGraph().apply {
-        adjacencyList[initialProfile] = mutableListOf()
+    val matchGraph = MatchGraph(ComparingContext()).apply {
+        addProfile(initialProfile)
     }
 
     val searcher = Searcher(resources, matchGraph)

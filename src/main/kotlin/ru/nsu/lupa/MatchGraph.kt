@@ -4,8 +4,8 @@ package ru.nsu.lupa
  * Graph to represent matches between different profiles
  */
 class MatchGraph(
-    val comparingContext: ComparingContext?,
-    adjacencyList: Map<Profile, List<Edge<MatchCriteria, Profile>>>
+    val comparingContext: ComparingContext,
+    adjacencyList: Map<Profile, List<Edge<MatchCriteria, Profile>>> = mapOf()
 ) {
     private val adjacencyList: MutableMap<Profile, MutableList<Edge<MatchCriteria, Profile>>> = buildMap {
         adjacencyList.map { (key, value) -> put(key, value.toMutableList()) }
