@@ -2,11 +2,38 @@ package ru.nsu.lupa.dsl
 
 import ru.nsu.lupa.*
 
-fun config(block: Configuration.() -> Unit) = Configuration().apply { block() }
+fun config(block: ConfigurationContext.() -> Unit): Configuration {
+    val ctx = ConfigurationContext().apply(block)
+    return Configuration(ctx.parameters, ctx.profiles)
+}
 
-fun Configuration.profiles(block: ProfilesContext.() -> Unit) {
-    val ctx = ProfilesContext().apply { block() }
-    this.profiles.addAll(ctx.list)
+class ConfigurationContext {
+    var parameters: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
+    val profiles: MutableList<Profile> = mutableListOf()
+    fun parameters(block: ParametersContext.() -> Unit) {
+        val ctx = ParametersContext().apply(block)
+        this.parameters.putAll(ctx.map)
+    }
+
+    fun profiles(block: ProfilesContext.() -> Unit) {
+        val ctx = ProfilesContext().apply(block)
+        this.profiles.addAll(ctx.list)
+    }
+}
+
+class ParametersContext {
+    val map = mutableMapOf<String, MutableMap<String, String>>()
+    fun resource(id: String, block: ResourceParametersContext.() -> Unit) {
+        val ctx = ResourceParametersContext().apply(block)
+        map += id to ctx.map
+    }
+}
+
+class ResourceParametersContext {
+    val map = mutableMapOf<String, String>()
+    infix fun String.set(value: String) {
+        map += this@set to value
+    }
 }
 
 class ProfilesContext {

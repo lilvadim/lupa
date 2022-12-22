@@ -20,11 +20,10 @@ class MatchGraph constructor(
      * Adds new profile in graph
      */
     fun addProfile(profile: Profile) {
+        adjacencyList.putIfAbsent(profile, mutableListOf())
         for ((vertex, edges) in adjacencyList) {
             val matches = compareProfiles(vertex, profile, comparingContext)
-            if (matches.isNotEmpty()) {
-                edges += matches.map { Edge(it, profile) }
-            }
+            edges += matches.map { Edge(it, profile) }
         }
     }
 
@@ -50,7 +49,8 @@ data class Edge<W, N>(val label: W, val node: N)
  */
 enum class MatchCriteria {
     USERNAME {
-        override fun isMatch(x: Profile, y: Profile, ctx: ComparingContext?): Boolean = x.username == y.username
+        override fun isMatch(x: Profile, y: Profile, ctx: ComparingContext?): Boolean =
+            x.username == y.username && notSameResource(x, y)
     },
     NAME_SURNAME {
         override fun isMatch(x: Profile, y: Profile, ctx: ComparingContext?): Boolean {
@@ -58,7 +58,7 @@ enum class MatchCriteria {
             x.name!!
             y.name!!
             return (nameProcessor.synonymsOf(x.name).toSet() == nameProcessor.synonymsOf(y.name).toSet())
-                    && x.surname == y.surname
+                    && x.surname == y.surname && notSameResource(x, y)
         }
     };
 
@@ -67,6 +67,8 @@ enum class MatchCriteria {
      */
     abstract fun isMatch(x: Profile, y: Profile, ctx: ComparingContext? = null): Boolean
 }
+
+fun notSameResource(x: Profile, y: Profile): Boolean = x.resourceUrl != y.resourceUrl
 
 /**
  * Context that used to compare profiles, can contain different helper objects, such as NameProcessor

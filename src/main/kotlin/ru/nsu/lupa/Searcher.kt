@@ -9,7 +9,7 @@ class Searcher @Inject constructor(
     /**
      * List of resources to search, order is important
      */
-    val resourceManager: ResourceManager,
+    private val resourceManager: ResourceManager,
     val matchGraph: MatchGraph,
 ) : Runnable {
     override fun run() {

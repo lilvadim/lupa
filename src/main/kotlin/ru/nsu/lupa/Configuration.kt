@@ -1,5 +1,13 @@
 package ru.nsu.lupa
 
 class Configuration(
-    val profiles: MutableList<Profile> = mutableListOf()
-)
+    /**
+     * `Resource.id -> param_name -> value`
+     */
+    var parameters: Map<String, Map<String, String>>,
+    val profiles: List<Profile>
+) {
+    fun param(resourceId: String, paramName: String): String? {
+        return parameters[resourceId]?.get(paramName)
+    }
+}
