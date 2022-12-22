@@ -63,8 +63,11 @@ enum class MatchCriteria {
     abstract fun isMatch(x: Profile, y: Profile, ctx: ComparingContext? = null): Boolean
 }
 
+/**
+ * Context that used to compare profiles, can contain different helper objects, such as NameProcessor
+ */
 class ComparingContext(
-    val nameProcessor: NameProcessor?
+    val nameProcessor: NameProcessor? = null
 )
 
 /**
