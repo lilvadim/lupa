@@ -1,10 +1,10 @@
-import ru.nsu.lupa.*
+import ru.nsu.lupa.dsl.*
 
 config {
-    profiles(
-        Profile(
-            name = Name("Vadim"),
-            surname = Surname("Mostovoy")
+    profiles {
+        profile(
+            name = "Vadim",
+            surname = "Mostovoy"
         )
-    )
+    }
 }
