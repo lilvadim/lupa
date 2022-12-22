@@ -1,12 +1,17 @@
 package ru.nsu.lupa
 
+import javax.inject.Inject
+
 /**
  * Graph to represent matches between different profiles
  */
-class MatchGraph(
+class MatchGraph constructor(
     val comparingContext: ComparingContext,
-    adjacencyList: Map<Profile, List<Edge<MatchCriteria, Profile>>> = mapOf()
+    adjacencyList: Map<Profile, List<Edge<MatchCriteria, Profile>>>
 ) {
+    @Inject
+    constructor(comparingContext: ComparingContext) : this(comparingContext, mapOf())
+
     private val adjacencyList: MutableMap<Profile, MutableList<Edge<MatchCriteria, Profile>>> = buildMap {
         adjacencyList.map { (key, value) -> put(key, value.toMutableList()) }
     }.toMutableMap()
@@ -66,8 +71,8 @@ enum class MatchCriteria {
 /**
  * Context that used to compare profiles, can contain different helper objects, such as NameProcessor
  */
-class ComparingContext(
-    val nameProcessor: NameProcessor? = null
+class ComparingContext @Inject constructor(
+    val nameProcessor: NameProcessor
 )
 
 /**
