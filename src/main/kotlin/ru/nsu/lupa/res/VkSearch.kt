@@ -4,8 +4,7 @@ import com.vk.api.sdk.client.VkApiClient
 import com.vk.api.sdk.client.actors.UserActor
 import com.vk.api.sdk.httpclient.HttpTransportClient
 import com.vk.api.sdk.queries.users.UsersSearchQuery
-import ru.nsu.lupa.MatchGraph
-import ru.nsu.lupa.Resource
+import ru.nsu.lupa.*
 
 private const val APP_ID = 51506122
 private const val CLIENT_SECRET = "zj7hCzmwsiRVUn6VxFwj"
@@ -26,7 +25,18 @@ class VkSearch(
             val response = UsersSearchQuery(vkClient, actor)
                 .q("${profile.name?.value ?: ""} ${profile.surname?.value ?: ""}")
                 .execute()
-            println(response.toPrettyString())
+            val profiles = response.items.map { user ->
+                Profile(
+                    resourceUrl = homeUrl,
+                    name = Name(user.firstName),
+                    surname = Surname(user.lastName),
+                    relatedLinks = listOf("https://vk.com/${user.id}"),
+                    username = user.nickname?.let { Username(it) },
+                    email = user.email?.let { Email(it) },
+                    phone = user.mobilePhone?.let { PhoneNumber(it) },
+                )
+            }
+            profiles.forEach { matchGraph.addProfile(it) }
         }
     }
 }

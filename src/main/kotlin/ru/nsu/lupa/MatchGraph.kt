@@ -50,14 +50,13 @@ data class Edge<W, N>(val label: W, val node: N)
 enum class MatchCriteria {
     USERNAME {
         override fun isMatch(x: Profile, y: Profile, ctx: ComparingContext?): Boolean =
-            x.username == y.username && notSameResource(x, y)
+            x.username != null && y.username != null && x.username == y.username && notSameResource(x, y)
     },
     NAME_SURNAME {
         override fun isMatch(x: Profile, y: Profile, ctx: ComparingContext?): Boolean {
             val nameProcessor = ctx?.nameProcessor ?: simpleNameProcessor()
-            x.name!!
-            y.name!!
-            return (nameProcessor.synonymsOf(x.name).toSet() == nameProcessor.synonymsOf(y.name).toSet())
+            return x.name != null && y.name != null && x.surname != null && y.surname != null
+                    && (nameProcessor.synonymsOf(x.name).toSet() == nameProcessor.synonymsOf(y.name).toSet())
                     && x.surname == y.surname && notSameResource(x, y)
         }
     };
