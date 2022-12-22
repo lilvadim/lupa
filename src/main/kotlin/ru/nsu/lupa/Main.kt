@@ -1,41 +1,35 @@
 package ru.nsu.lupa
 
+import com.google.inject.Guice
+import com.google.inject.Provides
+import com.google.inject.Singleton
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
-import kotlinx.cli.required
-import ru.nsu.lupa.res.VkSearch
-
-val resources = listOf(VkSearch())
+import ru.nsu.lupa.inject.AppModule
+import java.io.File
+import javax.script.ScriptEngineManager
 
 internal fun main(args: Array<String>) {
     val parser = ArgParser("lupa")
 
-    val name by parser.option(
-        type = ArgType.String,
-        fullName = "name",
-        shortName = "n",
-        description = "Any form of name"
-    ).required()
-
-    val surname by parser.option(
-        type = ArgType.String,
-        fullName = "surname",
-        shortName = "s",
-        description = "Surname"
-    ).required()
+    val configPath by parser.argument(
+        ArgType.String,
+        description = "Path to *.kts configuration file",
+        fullName = "configuration-file-path"
+    )
 
     parser.parse(args)
 
-    val initialProfile = Profile(
-        name = Name(name),
-        surname = Surname(surname)
-    )
+    val configFile = File(configPath)
+    val engine = ScriptEngineManager().getEngineByExtension("kts")
+    val config = engine.eval(configFile.readText()) as Configuration
 
-    val matchGraph = MatchGraph(ComparingContext()).apply {
-        addProfile(initialProfile)
-    }
+    val inject = Guice.createInjector(object : AppModule() {
+        @Singleton
+        @Provides
+        fun configuration() = config
+    })
 
-    val searcher = Searcher(resources, matchGraph)
-
-    println(searcher.matchGraph)
+    val app = inject.getInstance(App::class.java)
+    app.run()
 }

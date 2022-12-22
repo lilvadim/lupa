@@ -1,16 +1,18 @@
 package ru.nsu.lupa
 
+import javax.inject.Inject
+
 /**
  * Search runner
  */
-class Searcher(
+class Searcher @Inject constructor(
     /**
      * List of resources to search, order is important
      */
-    val resources: List<Resource>,
+    val resourceManager: ResourceManager,
     val matchGraph: MatchGraph,
 ) : Runnable {
     override fun run() {
-        resources.forEach { it.performSearch(matchGraph) }
+        resourceManager.resources.forEach { it.performSearch(matchGraph) }
     }
 }

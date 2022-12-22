@@ -11,7 +11,7 @@ import ru.nsu.lupa.Resource
 
 class VkSearch : Resource.BaseResource(homeUrl = "https://vk.com/") {
     override fun performSearch(matchGraph: MatchGraph) {
-        val usersSearchQuery = UsersSearchQuery(vkClient, actor)
+//        val usersSearchQuery = UsersSearchQuery(vkClient, actor)
     }
 
     private companion object {
@@ -21,13 +21,13 @@ class VkSearch : Resource.BaseResource(homeUrl = "https://vk.com/") {
         const val code = ""
 
         val vkClient = VkApiClient(HttpTransportClient())
-        val actor: UserActor
+//        val actor: UserActor
         init {
-            val authResponse: UserAuthResponse = vkClient.oAuth()
-                .userAuthorizationCodeFlow(APP_ID, CLIENT_SECRET, REDIRECT_URI, code)
-                .execute()
-
-            actor = UserActor(authResponse.userId, authResponse.accessToken)
+//            val authResponse: UserAuthResponse = vkClient.oAuth()
+//                .userAuthorizationCodeFlow(APP_ID, CLIENT_SECRET, REDIRECT_URI, code)
+//                .execute()
+//
+//            actor = UserActor(authResponse.userId, authResponse.accessToken)
         }
     }
 }
