@@ -58,8 +58,6 @@ fun performSearch(matchGraph: MatchGraph)
 4. В файле конфигурации для VK указываем эти параметры
 
 ```kotlin
-package ru.nsu.lupa
-
 import ru.nsu.lupa.dsl.*
 
 config {

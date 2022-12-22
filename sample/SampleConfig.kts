@@ -1,5 +1,3 @@
-package ru.nsu.lupa
-
 import ru.nsu.lupa.dsl.*
 
 config {
