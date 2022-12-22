@@ -50,7 +50,7 @@ fun performSearch(matchGraph: MatchGraph)
 Для поиска ВКонтакте необходимо авторизоваться.
 
 1. Переходим
-   по [ссылке](`https://oauth.vk.com/oauth/authorize?client_id=51506122&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,notify,photos,wall,email,mail,groups,stats,offline&response_type=token&v=5.89`)
+   по [ссылке](https://oauth.vk.com/oauth/authorize?client_id=51506122&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,notify,photos,wall,email,mail,groups,stats,offline&response_type=token&v=5.89)
 2. Даем разрешение
 3. Копируем из строки браузера значения параметров `access_token` и `user_id`
    - `..&access_token=<ЗНАЧЕНИЕ>&..`
