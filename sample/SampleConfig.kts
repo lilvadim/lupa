@@ -1,3 +1,5 @@
+package ru.nsu.lupa
+
 import ru.nsu.lupa.dsl.*
 
 config {
@@ -6,5 +8,12 @@ config {
             name = "Vadim",
             surname = "Mostovoy"
         )
+    }
+
+    parameters {
+        resource("vk") {
+            "accessToken" set "..."
+            "userId" set "..."
+        }
     }
 }
