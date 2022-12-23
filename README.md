@@ -48,7 +48,77 @@ fun performSearch(matchGraph: MatchGraph)
 ## Конфигурация
 
 Настройка программы происходит с помощью файла конфигурации, написанном на KotlinScript (`*.kts`).
+
+В начале файла необходимо указать директиву
+
+```kotlin
+import ru.nsu.lupa.*
+```
+
+### Идентификатор ресурса
+
+Строка, получаемое из доменного имени, путем удаления всего кроме названия.
+Примеры:
+
+- домен - `https://api.vk.com/`, идентификатор - `vk`
+- домен - `https://yandex.ru/`, идентификатор - `yandex`
+
 Доступные контексты:
+
+- ### `config`
+
+  Базовый контекст, обязателен в top-level файла.
+
+- ### `profiles`
+
+  #### Доступен в контекстах
+
+    - `config`
+
+  #### Методы
+
+    - `profile`
+
+      Задает стартовые данные для поиска.
+        - Параметры
+            - `resourceUrl: String? = null`
+            - `name: String? = null`
+            - `surname: String? = null`
+            - `username: String? = null`
+            - `email: String? = null`
+            - `phone: String? = null`
+        - Пример использования
+       ```kotlin
+       profile(
+                name = "Вадим",
+                surname = "Мостовой"
+            )
+       ```
+
+- ### `parameters`
+
+  #### Доступен в контекстах
+
+    - `config`
+
+- ### `resource(<id>)`
+
+  #### Доступен в контекстах
+
+    - `parameters`
+
+  #### Методы
+
+    - `set` (infix)
+
+      Устанавливает значения внешнего параметра для ресурса с идентификатором `id`.
+        - Параметры
+            - `parameterName: String`
+            - `value`
+        - Пример использования
+            ```kotlin
+            "userId" set "239105736"
+            ```
 
 ## VK
 
@@ -58,8 +128,8 @@ fun performSearch(matchGraph: MatchGraph)
    по [ссылке](https://oauth.vk.com/oauth/authorize?client_id=51506122&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends,notify,photos,wall,email,mail,groups,stats,offline&response_type=token&v=5.89)
 2. Даем разрешение
 3. Копируем из строки браузера значения параметров `access_token` и `user_id`
-   - `..&access_token=<ЗНАЧЕНИЕ>&..`
-   - `..&user_id=<ЗНАЧЕНИЕ>&..`
+    - `..&access_token=<ЗНАЧЕНИЕ>&..`
+    - `..&user_id=<ЗНАЧЕНИЕ>&..`
 4. В файле конфигурации для VK указываем эти параметры
 
 ```kotlin
@@ -72,6 +142,8 @@ config {
             surname = "Иванов"
         )
     }
+
+    /* ... */
 
     parameters {
         resource("vk") {
