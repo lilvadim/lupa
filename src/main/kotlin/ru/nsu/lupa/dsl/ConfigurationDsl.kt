@@ -2,11 +2,15 @@ package ru.nsu.lupa.dsl
 
 import ru.nsu.lupa.*
 
+@DslMarker
+annotation class ConfigurationDsl
+
 fun config(block: ConfigurationContext.() -> Unit): Configuration {
     val ctx = ConfigurationContext().apply(block)
     return Configuration(ctx.parameters, ctx.profiles)
 }
 
+@ConfigurationDsl
 class ConfigurationContext {
     var parameters: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
     val profiles: MutableList<Profile> = mutableListOf()
@@ -21,6 +25,7 @@ class ConfigurationContext {
     }
 }
 
+@ConfigurationDsl
 class ParametersContext {
     val map = mutableMapOf<String, MutableMap<String, String>>()
     fun resource(id: String, block: ResourceParametersContext.() -> Unit) {
@@ -29,6 +34,7 @@ class ParametersContext {
     }
 }
 
+@ConfigurationDsl
 class ResourceParametersContext {
     val map = mutableMapOf<String, String>()
     infix fun String.set(value: String) {
@@ -36,6 +42,7 @@ class ResourceParametersContext {
     }
 }
 
+@ConfigurationDsl
 class ProfilesContext {
     val list = mutableListOf<Profile>()
     fun profile(
