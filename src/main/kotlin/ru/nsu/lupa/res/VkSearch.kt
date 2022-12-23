@@ -30,8 +30,8 @@ class VkSearch(
                     resourceUrl = homeUrl,
                     name = Name(user.firstName),
                     surname = Surname(user.lastName),
-                    relatedLinks = listOf("https://vk.com/${user.id}"),
-                    username = user.nickname?.let { Username(it) },
+                    relatedLinks = listOf("https://vk.com/id${user.id}"),
+                    username = user.screenName?.let { Username(it) },
                     email = user.email?.let { Email(it) },
                     phone = user.mobilePhone?.let { PhoneNumber(it) },
                 )

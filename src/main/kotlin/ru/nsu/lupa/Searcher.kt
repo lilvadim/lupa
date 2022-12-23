@@ -11,6 +11,5 @@ class Searcher @Inject constructor(
 ) : Runnable {
     override fun run() {
         resourceManager.resources.forEach { it.performSearch(matchGraph) }
-        matchGraph
     }
 }

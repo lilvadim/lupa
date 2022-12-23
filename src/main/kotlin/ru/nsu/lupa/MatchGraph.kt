@@ -1,5 +1,6 @@
 package ru.nsu.lupa
 
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -13,7 +14,7 @@ class MatchGraph constructor(
     constructor(comparingContext: ComparingContext) : this(comparingContext, mapOf())
 
     private val adjacencyList: MutableMap<Profile, MutableList<Edge<MatchCriteria, Profile>>> = buildMap {
-        adjacencyList.map { (key, value) -> put(key, value.toMutableList()) }
+        adjacencyList.map { (key, value) -> put(key, LinkedList(value)) }
     }.toMutableMap()
 
     /**

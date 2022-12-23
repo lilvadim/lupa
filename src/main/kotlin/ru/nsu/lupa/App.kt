@@ -10,5 +10,11 @@ class App @Inject constructor(
     override fun run() {
         configuration.profiles.forEach { matchGraph.addProfile(it) }
         searcher.run()
+        output(matchGraph)
+    }
+
+    private fun output(matchGraph: MatchGraph) {
+//        TODO вывод результата
+        matchGraph
     }
 }
