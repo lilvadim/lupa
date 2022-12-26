@@ -7,13 +7,13 @@ interface NameProcessor {
     /**
      * Returns synonymic forms of `name`
      */
-    fun synonymsOf(name: Name): Set<Name>
+    fun synonymsOf(name: Name): MutableSet<String>
 }
 
 /**
  * Returns name processor which doesn't find any synonymic forms
  */
 fun simpleNameProcessor() = object : NameProcessor {
-    override fun synonymsOf(name: Name): Set<Name> = setOf(name)
+    override fun synonymsOf(name: Name): MutableSet<String> = mutableSetOf()
 }
 

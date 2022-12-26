@@ -23,6 +23,7 @@ dependencies {
     api 'javax.inject:javax.inject:1'
     implementation 'org.kohsuke:github-api:1.313'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation 'org.jsoup:jsoup:1.10.3'
 }
 
 test {
