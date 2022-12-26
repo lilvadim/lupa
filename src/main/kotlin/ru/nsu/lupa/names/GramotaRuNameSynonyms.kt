@@ -3,9 +3,10 @@ package ru.nsu.lupa.names
 import org.jsoup.Jsoup
 import ru.nsu.lupa.Name
 import ru.nsu.lupa.NameProcessor
+import java.util.*
 
 
-class NamesSynonyms : NameProcessor {
+class GramotaRuNameSynonyms : NameProcessor {
 
     private fun shouldParseHTML(name: String): String {
         val doc = Jsoup.connect("http://www.gramota.ru/slovari/info/petr/imsm/").get()
@@ -18,10 +19,10 @@ class NamesSynonyms : NameProcessor {
         return a
     }
 
-    private fun parseString(name: String): MutableSet<Name> {
+    private fun parseString(name: String): Set<String> {
         val stringToParse = shouldParseHTML(name)
         var newStr = stringToParse.substring(936, 74533)
-        newStr = newStr.toLowerCase()
+        newStr = newStr.lowercase(Locale.getDefault())
         val nameList = newStr.split(" ").toMutableList()
 
         val res = mutableSetOf<String>()
@@ -87,13 +88,13 @@ class NamesSynonyms : NameProcessor {
             }
         }
 
-        return res.map { Name(it) }.toMutableSet()
+        return res
     }
 
 
     override fun synonymsOf(name: Name): Set<Name> {
         val nameToParse = name.value
-        return parseString(nameToParse.toLowerCase())
+        return parseString(nameToParse.lowercase()).map { Name(it) }.toSet()
 
     }
 
