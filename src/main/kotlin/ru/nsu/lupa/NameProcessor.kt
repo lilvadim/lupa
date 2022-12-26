@@ -7,7 +7,7 @@ interface NameProcessor {
     /**
      * Returns synonymic forms of `name`
      */
-    fun synonymsOf(name: Name): MutableSet<String>
+    fun synonymsOf(name: Name): Set<String>
 }
 
 /**
