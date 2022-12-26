@@ -18,7 +18,7 @@ class NamesSynonyms : NameProcessor {
         return a
     }
 
-    private fun parseString(name: String): MutableSet<String> {
+    private fun parseString(name: String): MutableSet<Name> {
         val stringToParse = shouldParseHTML(name)
         var newStr = stringToParse.substring(936, 74533)
         newStr = newStr.toLowerCase()
@@ -87,11 +87,11 @@ class NamesSynonyms : NameProcessor {
             }
         }
 
-        return res
+        return res.map { Name(it) }.toMutableSet()
     }
 
 
-    override fun synonymsOf(name: Name): Set<String> {
+    override fun synonymsOf(name: Name): Set<Name> {
         val nameToParse = name.value
         return parseString(nameToParse.toLowerCase())
 
