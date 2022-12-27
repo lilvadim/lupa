@@ -15,6 +15,6 @@ class App @Inject constructor(
 
     private fun output(matchGraph: MatchGraph) {
 //        TODO вывод результата
-        matchGraph
+        matchGraph.asAdjacencyList().forEach { println(it) }
     }
 }
