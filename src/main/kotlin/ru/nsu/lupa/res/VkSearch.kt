@@ -20,10 +20,12 @@ class VkSearch(
 
     override fun performSearch(matchGraph: MatchGraph) {
         for ((profile, _) in matchGraph.asAdjacencyList()) {
+            if (profile.name == null && profile.surname == null) {
+                continue
+            }
             val response = UsersSearchQuery(vkClient, actor)
                 .q("${profile.name?.value ?: ""} ${profile.surname?.value ?: ""}")
                 .execute()
-            // TODO screen name не находит, попробовать User.get()
             val profiles = response.items.map { user ->
                 val fullUser = UsersGetQuery(vkClient, actor)
                     .userIds(user.id.toString())
