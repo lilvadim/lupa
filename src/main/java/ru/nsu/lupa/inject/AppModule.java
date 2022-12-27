@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import ru.nsu.lupa.*;
+import ru.nsu.lupa.res.GitHubSearch;
 import ru.nsu.lupa.res.VkSearch;
 
 import java.util.List;
@@ -25,7 +26,8 @@ public class AppModule extends AbstractModule {
     @Provides
     ResourceManager resources(Configuration configuration) {
         var list = List.of(
-                new VkSearch(configuration.getParameters())
+                new VkSearch(configuration.getParameters()),
+                new GitHubSearch()
         );
         return new ResourceManager(list);
     }

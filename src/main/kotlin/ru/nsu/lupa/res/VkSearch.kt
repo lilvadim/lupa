@@ -3,12 +3,10 @@ package ru.nsu.lupa.res
 import com.vk.api.sdk.client.VkApiClient
 import com.vk.api.sdk.client.actors.UserActor
 import com.vk.api.sdk.httpclient.HttpTransportClient
+import com.vk.api.sdk.objects.users.Fields
+import com.vk.api.sdk.queries.users.UsersGetQuery
 import com.vk.api.sdk.queries.users.UsersSearchQuery
 import ru.nsu.lupa.*
-
-private const val APP_ID = 51506122
-private const val CLIENT_SECRET = "zj7hCzmwsiRVUn6VxFwj"
-private const val REDIRECT_URI = "https://api.vk.com/blank.html"
 
 class VkSearch(
     parameters: Map<String, Map<String, String>>
@@ -25,15 +23,21 @@ class VkSearch(
             val response = UsersSearchQuery(vkClient, actor)
                 .q("${profile.name?.value ?: ""} ${profile.surname?.value ?: ""}")
                 .execute()
+            // TODO screen name не находит, попробовать User.get()
             val profiles = response.items.map { user ->
+                val fullUser = UsersGetQuery(vkClient, actor)
+                    .userIds(user.id.toString())
+                    .fields(Fields.SCREEN_NAME)
+                    .execute()
+                    .first()
                 Profile(
                     resourceUrl = homeUrl,
-                    name = Name(user.firstName),
-                    surname = Surname(user.lastName),
+                    name = Name(fullUser.firstName),
+                    surname = Surname(fullUser.lastName),
                     relatedLinks = listOf("https://vk.com/id${user.id}"),
-                    username = user.screenName?.let { Username(it) },
-                    email = user.email?.let { Email(it) },
-                    phone = user.mobilePhone?.let { PhoneNumber(it) },
+                    username = fullUser.screenName?.let { Username(it) },
+                    email = fullUser.email?.let { Email(it) },
+                    phone = fullUser.mobilePhone?.let { PhoneNumber(it) },
                 )
             }
             profiles.forEach { matchGraph.addProfile(it) }
