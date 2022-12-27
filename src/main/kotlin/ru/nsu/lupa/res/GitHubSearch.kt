@@ -9,9 +9,12 @@ class GitHubSearch : Resource.BaseResource(homeUrl = "https://github.com/") {
     override fun performSearch(matchGraph: MatchGraph) {
         val g = GitHub.connectAnonymously()
         for ((profile, _) in matchGraph.asAdjacencyList()) {
+            if (profile.username == null) {
+                continue
+            }
             val user: GHUser
             try {
-                user = g.getUser(profile.username.toString())
+                user = g.getUser(profile.username.value)
             } catch (e: GHFileNotFoundException) {
                 continue
             }
