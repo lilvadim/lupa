@@ -7,10 +7,13 @@ import com.vk.api.sdk.objects.users.Fields
 import com.vk.api.sdk.queries.users.UsersGetQuery
 import com.vk.api.sdk.queries.users.UsersSearchQuery
 import ru.nsu.lupa.*
+import javax.inject.Inject
 
-class VkSearch(
-    parameters: Map<String, Map<String, String>>
+class VkSearch @Inject constructor(
+    configuration: Configuration
 ) : Resource.BaseResource(homeUrl = "https://vk.com/") {
+    private val parameters = configuration.parameters
+
     private val vkClient = VkApiClient(HttpTransportClient())
 
     private val userId by parameters[id]!!

@@ -21,8 +21,10 @@ internal fun main(args: Array<String>) {
     parser.parse(args)
 
     val configFile = File(configPath)
-    val engine = ScriptEngineManager().getEngineByExtension("kts")
-    val config = engine.eval(configFile.readText()) as Configuration
+    val engine = ScriptEngineManager().getEngineByExtension("kts").apply {
+        eval("import ru.nsu.lupa.dsl.*\n")
+    }
+    val config = engine.eval("config { ${configFile.readText()} }") as Configuration
 
     val inject = Guice.createInjector(object : AppModule() {
         @Singleton

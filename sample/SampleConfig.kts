@@ -1,17 +1,13 @@
-import ru.nsu.lupa.dsl.*
+profiles {
+    profile(
+        name = "Иван",
+        surname = "Иванов"
+    )
+}
 
-config {
-    profiles {
-        profile(
-            name = "Иван",
-            surname = "Иванов"
-        )
-    }
-
-    parameters {
-        resource("vk") {
-            "accessToken" set "<YOUR_VALUE>"
-            "userId" set "<YOUR_VALUE>"
-        }
+parameters {
+    resource("vk") {
+        "accessToken" set "<YOUR_VALUE>"
+        "userId" set "<YOUR_VALUE>"
     }
 }
