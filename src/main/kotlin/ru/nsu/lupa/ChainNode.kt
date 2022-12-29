@@ -8,7 +8,7 @@ data class ChainNode<L, N>(
     /**
      * Null if there is no next node
      */
-    val next: ChainNode<L, N>?,
+    var next: ChainNode<L, N>?,
     /**
      * Null if there is no next node
      */
