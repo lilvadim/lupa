@@ -3,7 +3,6 @@ package ru.nsu.lupa.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import io.ktor.client.HttpClient;
 import ru.nsu.lupa.MatchGraph;
 import ru.nsu.lupa.NameProcessor;
 import ru.nsu.lupa.NameProcessorKt;
@@ -31,11 +30,5 @@ public class AppModule extends AbstractModule {
     ResourceManager resources(VkSearch vkSearch, GitHubSearch gitHubSearch) {
         var list = List.of(vkSearch, gitHubSearch);
         return new ResourceManager(list);
-    }
-
-    @Singleton
-    @Provides
-    HttpClient httpClient() {
-        return KotlinFactories.httpClient();
     }
 }

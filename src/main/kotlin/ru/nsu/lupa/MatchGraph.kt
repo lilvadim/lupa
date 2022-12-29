@@ -21,6 +21,7 @@ class MatchGraph constructor(
      * Adds new profile in graph
      */
     fun addProfile(profile: Profile) {
+        adjacencyList.putIfAbsent(profile, LinkedList())
         for ((vertex, edges) in adjacencyList) {
             val matches = compareProfiles(vertex, profile, comparingContext)
             edges += matches.map { Edge(it, profile) }
