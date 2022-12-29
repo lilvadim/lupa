@@ -1,7 +1,5 @@
 package ru.nsu.lupa
 
-import kotlin.math.max
-
 class ChainProcessor: ResultProcessor {
     /**
      * Convert match graph to list of chains from longest to shortest
@@ -25,8 +23,11 @@ class ChainProcessor: ResultProcessor {
 
     private fun dfs(node: Profile, previousChainNode: ChainNode<Set<MatchCriteria>, Profile>) {
         if (g[node]!!.isEmpty()) {
+            var currentChainNode: ChainNode<Set<MatchCriteria>, Profile> = ChainNode(node, null, null)
+            previousChainNode.next = currentChainNode
             val rootChainNodeCopy = rootChainNode.copy()
-            var currentChainNode = rootChainNodeCopy
+            currentChainNode = rootChainNodeCopy
+            currentChainNode = rootChainNodeCopy
             var currentLength = 0
             while (currentChainNode.next != null) {
                 currentChainNode.next = currentChainNode.next!!.copy()
