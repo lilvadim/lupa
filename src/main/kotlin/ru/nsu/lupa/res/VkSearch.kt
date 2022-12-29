@@ -30,6 +30,7 @@ class VkSearch @Inject constructor(
                 .q("${profile.name?.value ?: ""} ${profile.surname?.value ?: ""}")
                 .execute()
             val profiles = response.items.map { user ->
+                Thread.sleep(500)
                 val fullUser = UsersGetQuery(vkClient, actor)
                     .userIds(user.id.toString())
                     .fields(Fields.SCREEN_NAME)
