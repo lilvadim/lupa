@@ -1,5 +1,6 @@
 package ru.nsu.lupa
 
+import ru.nsu.lupa.out.convertToHtml
 import javax.inject.Inject
 
 class App @Inject constructor(
@@ -15,7 +16,10 @@ class App @Inject constructor(
     }
 
     private fun output(matchGraph: MatchGraph) {
-//        TODO вывод результата
-        println(resultProcessor.process(matchGraph))
+        val outFile = configuration.outputFile
+        if (outFile != null) {
+            outFile.createNewFile()
+            outFile.writeText(convertToHtml(resultProcessor.process(matchGraph)))
+        }
     }
 }
