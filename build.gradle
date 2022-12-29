@@ -25,6 +25,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-scripting-jsr223-unshaded:1.7.22"
     implementation 'org.kohsuke:github-api:1.313'
     implementation 'org.jsoup:jsoup:1.10.3'
+    implementation "io.ktor:ktor-server-html-builder:2.2.1"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.14.0"
 //    implementation "io.ktor:ktor-client-core:2.2.1"
 //    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 //    implementation "io.ktor:ktor-client-cio:2.2.1"
