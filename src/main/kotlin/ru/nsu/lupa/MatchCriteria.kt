@@ -33,7 +33,7 @@ private fun sameResource(x: Profile, y: Profile): Boolean = x.resourceUrl == y.r
  * @return list of matches
  */
 fun compareProfiles(x: Profile, y: Profile, ctx: ComparingContext? = null): Set<MatchCriteria> {
-    if (sameResource(x, y)) {
+    if (sameResource(x, y) || x == y) {
         return emptySet()
     }
     val result = mutableSetOf<MatchCriteria>()

@@ -1,40 +1,33 @@
 package ru.nsu.lupa
 
-import java.util.*
 import javax.inject.Inject
 
 /**
  * Graph to represent matches between different profiles
  */
-class MatchGraph constructor(
-    private val comparingContext: ComparingContext,
-    adjacencyList: Map<Profile, List<Edge<MatchCriteria, Profile>>>
+class MatchGraph @Inject constructor(
+    private val comparingContext: ComparingContext
 ) {
-    @Inject
-    constructor(comparingContext: ComparingContext) : this(comparingContext, mapOf())
 
-    private val adjacencyList: MutableMap<Profile, MutableList<Edge<MatchCriteria, Profile>>> = buildMap {
-        adjacencyList.map { (key, value) -> put(key, LinkedList(value)) }
-    }.toMutableMap()
+    private val adjacencyList: MutableMap<Profile, MutableMap<Profile, MutableSet<MatchCriteria>>> = mutableMapOf()
 
     /**
      * Adds new profile in graph
      */
     fun addProfile(profile: Profile) {
-        adjacencyList.putIfAbsent(profile, LinkedList())
+        adjacencyList.putIfAbsent(profile, mutableMapOf())
         for ((vertex, edges) in adjacencyList) {
             val matches = compareProfiles(vertex, profile, comparingContext)
-            edges += matches.map { Edge(it, profile) }
-            adjacencyList.getOrPut(profile) { LinkedList() } += matches.map { Edge(it, vertex) }
+            if (matches.isNotEmpty()) {
+                edges.getOrPut(profile) { mutableSetOf() } += matches
+            }
         }
     }
 
     /**
      * @return immutable view of graph
      */
-    fun asAdjacencyList(): Map<Profile, List<Edge<MatchCriteria, Profile>>> {
-        return buildMap {
-            adjacencyList.map { (key, value) -> put(key, value.toList()) }
-        }
+    fun asAdjacencyList(): Map<Profile, Map<Profile, Set<MatchCriteria>>> {
+        return adjacencyList.toMap()
     }
 }
