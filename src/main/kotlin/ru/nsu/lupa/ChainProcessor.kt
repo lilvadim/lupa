@@ -27,7 +27,6 @@ class ChainProcessor: ResultProcessor {
             previousChainNode.next = currentChainNode
             val rootChainNodeCopy = rootChainNode.copy()
             currentChainNode = rootChainNodeCopy
-            currentChainNode = rootChainNodeCopy
             var currentLength = 0
             while (currentChainNode.next != null) {
                 currentChainNode.next = currentChainNode.next!!.copy()
