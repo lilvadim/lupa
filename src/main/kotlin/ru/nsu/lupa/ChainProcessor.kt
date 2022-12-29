@@ -6,12 +6,13 @@ class ChainProcessor: ResultProcessor {
      */
     private lateinit var g: Map<Profile, Map<Profile, Set<MatchCriteria>>>
 
-    private val chainList = mutableListOf<ChainNode<Set<MatchCriteria>, Profile>>()
+    private lateinit var chainList: MutableList<ChainNode<Set<MatchCriteria>, Profile>>
 
     private lateinit var rootChainNode: ChainNode<Set<MatchCriteria>, Profile>
 
     override fun process(matchGraph: MatchGraph, rootProfile: Profile): List<ChainNode<Set<MatchCriteria>, Profile>> {
-        rootChainNode = ChainNode(rootProfile, null, null)
+        chainList = mutableListOf()
+        rootChainNode = ChainNode(null, null, null)
         g = matchGraph.asAdjacencyList()
         if (g[rootProfile]!!.isEmpty()) {
             return emptyList()
@@ -20,21 +21,21 @@ class ChainProcessor: ResultProcessor {
         return chainList
     }
 
-    private fun dfs(node: Profile, chainNode: ChainNode<Set<MatchCriteria>, Profile>) {
+    private fun dfs(node: Profile, previousChainNode: ChainNode<Set<MatchCriteria>, Profile>) {
         if (g[node]!!.isEmpty()) {
-            var cCN1 = rootChainNode.copy()
-            var cCN = cCN1
-            while (cCN.next != null) {
-                cCN.next = cCN.next!!.copy()
-                cCN = cCN.next!!
+            val rootChainNodeCopy = rootChainNode.copy()
+            var currentChainNode = rootChainNodeCopy
+            while (currentChainNode.next != null) {
+                currentChainNode.next = currentChainNode.next!!.copy()
+                currentChainNode = currentChainNode.next!!
             }
-            chainList.add(cCN1.next!!)
+            chainList.add(rootChainNodeCopy.next!!)
             return
         }
         for ((key, value) in g[node]!!) {
-            val nextCN = ChainNode(node, null, value)
-            chainNode.next = nextCN
-            dfs(key, nextCN)
+            val currentChainNode = ChainNode(node, null, value)
+            previousChainNode.next = currentChainNode
+            dfs(key, currentChainNode)
         }
     }
 }
