@@ -19,7 +19,7 @@ class App @Inject constructor(
         val outFile = configuration.outputFile
         if (outFile != null) {
             outFile.createNewFile()
-            outFile.writeText(convertToHtml(resultProcessor.process(matchGraph)))
+            outFile.writeText(convertToHtml(resultProcessor.process(matchGraph, configuration.profiles[0])))
         }
     }
 }

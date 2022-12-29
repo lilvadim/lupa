@@ -10,7 +10,8 @@ fun convertToHtml(chains: List<ChainNode<Set<MatchCriteria>, Profile>>): String 
     body {
         h1 { +"Found Profiles" }
 
-        for (chain in chains) {
+        for ((idx, chain) in chains.withIndex()) {
+            h2 { +"Match Chain #${idx + 1}" }
             table {
                 style {
                     unsafe {
@@ -18,6 +19,7 @@ fun convertToHtml(chains: List<ChainNode<Set<MatchCriteria>, Profile>>): String 
                             "table, th, td {" +
                                     "border:1px solid DarkGray;" +
                                     "width: 100%;" +
+                                    "table-layout: fixed;" +
                                     "}"
                         )
                     }
@@ -45,14 +47,17 @@ fun convertToHtml(chains: List<ChainNode<Set<MatchCriteria>, Profile>>): String 
                     if (node.next != null) {
                         tr {
                             td {
-                                +"Matches by ${node!!.label?.joinToString(separator = ", ")} with profile below"
+                                +"↓ Matches by ${
+                                    node!!.label?.joinToString(separator = ", ") {
+                                        it.toString().lowercase()
+                                    }
+                                } with profile below"
                             }
                         }
                     }
 
                     node = node.next
                 }
-                br
             }
         }
     }

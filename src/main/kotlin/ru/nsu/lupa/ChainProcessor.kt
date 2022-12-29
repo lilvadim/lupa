@@ -1,7 +1,5 @@
 package ru.nsu.lupa
 
-import kotlin.collections.HashSet
-
 class ChainProcessor: ResultProcessor {
     /**
      * Convert match graph to list of chains from longest to shortest
@@ -12,14 +10,11 @@ class ChainProcessor: ResultProcessor {
 
     private lateinit var rootChainNode: ChainNode<Set<MatchCriteria>, Profile>
 
-    override fun process(matchGraph: MatchGraph): List<ChainNode<Set<MatchCriteria>, Profile>> {
-        val cs = HashSet<Profile>()
+    override fun process(matchGraph: MatchGraph, rootProfile: Profile): List<ChainNode<Set<MatchCriteria>, Profile>> {
+        rootChainNode = ChainNode(rootProfile, null, null)
         g = matchGraph.asAdjacencyList()
-        g.forEach{ entry -> entry.value.forEach { cs.add(it.key) } }
-        val rootProfile = g.keys.find { e -> !cs.contains(e) }
-        rootChainNode = ChainNode(rootProfile!!, null, null)
         if (g[rootProfile]!!.isEmpty()) {
-            return chainList
+            return emptyList()
         }
         dfs(rootProfile, rootChainNode)
         return chainList
@@ -27,16 +22,17 @@ class ChainProcessor: ResultProcessor {
 
     private fun dfs(node: Profile, chainNode: ChainNode<Set<MatchCriteria>, Profile>) {
         if (g[node]!!.isEmpty()) {
-            var cCN = rootChainNode
+            var cCN1 = rootChainNode.copy()
+            var cCN = cCN1
             while (cCN.next != null) {
                 cCN.next = cCN.next!!.copy()
                 cCN = cCN.next!!
             }
-            chainList.add(rootChainNode.next!!)
+            chainList.add(cCN1.next!!)
             return
         }
-        for (key in g[node]!!.keys) {
-            val nextCN = ChainNode(key, null, g[node]!![key])
+        for ((key, value) in g[node]!!) {
+            val nextCN = ChainNode(node, null, value)
             chainNode.next = nextCN
             dfs(key, nextCN)
         }
