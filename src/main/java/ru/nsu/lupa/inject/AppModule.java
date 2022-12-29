@@ -3,10 +3,7 @@ package ru.nsu.lupa.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import ru.nsu.lupa.MatchGraph;
-import ru.nsu.lupa.NameProcessor;
-import ru.nsu.lupa.NameProcessorKt;
-import ru.nsu.lupa.ResourceManager;
+import ru.nsu.lupa.*;
 import ru.nsu.lupa.res.GitHubSearch;
 import ru.nsu.lupa.res.VkSearch;
 
@@ -17,6 +14,7 @@ public class AppModule extends AbstractModule {
     protected void configure() {
         super.configure();
         bind(MatchGraph.class).in(Singleton.class);
+        bind(ResultProcessor.class).to(ChainProcessor.class);
     }
 
     @Singleton

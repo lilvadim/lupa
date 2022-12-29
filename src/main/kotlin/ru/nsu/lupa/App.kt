@@ -6,7 +6,7 @@ class App @Inject constructor(
     private val configuration: Configuration,
     private val searcher: Searcher,
     private val matchGraph: MatchGraph,
-//    private val resultSorter: ResultProcessor
+    private val resultProcessor: ResultProcessor
 ) : Runnable {
     override fun run() {
         configuration.profiles.forEach { matchGraph.addProfile(it) }
@@ -16,6 +16,6 @@ class App @Inject constructor(
 
     private fun output(matchGraph: MatchGraph) {
 //        TODO вывод результата
-        matchGraph.asAdjacencyList().forEach { println(it) }
+        println(resultProcessor.process(matchGraph))
     }
 }
