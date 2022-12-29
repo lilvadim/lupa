@@ -5,7 +5,8 @@ import javax.inject.Inject
 class App @Inject constructor(
     private val configuration: Configuration,
     private val searcher: Searcher,
-    private val matchGraph: MatchGraph
+    private val matchGraph: MatchGraph,
+//    private val resultSorter: ResultProcessor
 ) : Runnable {
     override fun run() {
         configuration.profiles.forEach { matchGraph.addProfile(it) }
