@@ -23,8 +23,10 @@ class ChainProcessor: ResultProcessor {
 
     private fun dfs(node: Profile, previousChainNode: ChainNode<Set<MatchCriteria>, Profile>) {
         if (g[node]!!.isEmpty()) {
+            var currentChainNode: ChainNode<Set<MatchCriteria>, Profile> = ChainNode(node, null, null)
+            previousChainNode.next = currentChainNode
             val rootChainNodeCopy = rootChainNode.copy()
-            var currentChainNode = rootChainNodeCopy
+            currentChainNode = rootChainNodeCopy
             while (currentChainNode.next != null) {
                 currentChainNode.next = currentChainNode.next!!.copy()
                 currentChainNode = currentChainNode.next!!

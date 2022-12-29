@@ -34,7 +34,7 @@ fun convertToHtml(chains: List<ChainNode<Set<MatchCriteria>, Profile>>): String 
                 }
                 var node: ChainNode<Set<MatchCriteria>, Profile>? = chain
                 while (node != null) {
-                    val profile = node.value
+                    val profile = node.value!!
                     tr {
                         td { +profile.name?.value.toString() }
                         td { +profile.surname?.value.toString() }
