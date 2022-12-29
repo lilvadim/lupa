@@ -17,7 +17,6 @@ data class Profile(
     val username: Username? = null,
     val email: Email? = null,
     val phone: PhoneNumber? = null,
-    val ageData: AgeData = AgeData()
 )
 
 /**
@@ -44,14 +43,3 @@ data class Email(val value: String)
  * Phone number
  */
 data class PhoneNumber(val value: String)
-
-/**
- * Date of birth or approximate age (e.g. 29 years old), but some info may be not known,
- * e.g. only year is known, then other properties are null
- */
-data class AgeData(
-    val approxAge: Int? = null,
-    val birthDay: Int? = null,
-    val birthMonth: Int? = null,
-    val birthYear: Int? = null,
-)
