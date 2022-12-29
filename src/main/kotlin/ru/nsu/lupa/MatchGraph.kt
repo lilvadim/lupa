@@ -7,7 +7,7 @@ import javax.inject.Inject
  * Graph to represent matches between different profiles
  */
 class MatchGraph constructor(
-    val comparingContext: ComparingContext,
+    private val comparingContext: ComparingContext,
     adjacencyList: Map<Profile, List<Edge<MatchCriteria, Profile>>>
 ) {
     @Inject
@@ -25,6 +25,7 @@ class MatchGraph constructor(
         for ((vertex, edges) in adjacencyList) {
             val matches = compareProfiles(vertex, profile, comparingContext)
             edges += matches.map { Edge(it, profile) }
+            adjacencyList.getOrPut(profile) { LinkedList() } += matches.map { Edge(it, vertex) }
         }
     }
 

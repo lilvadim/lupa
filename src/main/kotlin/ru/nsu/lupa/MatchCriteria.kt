@@ -6,7 +6,8 @@ package ru.nsu.lupa
 enum class MatchCriteria {
     USERNAME {
         override fun isMatch(x: Profile, y: Profile, ctx: ComparingContext?): Boolean =
-            x.username != null && y.username != null && x.username == y.username
+            x.username != null && y.username != null
+                    && x.username.value.equals(y.username.value, ignoreCase = true)
     },
     NAME_SURNAME {
         override fun isMatch(x: Profile, y: Profile, ctx: ComparingContext?): Boolean {

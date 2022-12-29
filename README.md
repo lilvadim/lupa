@@ -50,12 +50,6 @@ fun performSearch(matchGraph: MatchGraph)
 Настройка программы происходит с помощью файла конфигурации, написанном на KotlinScript (`*.kts`).
 Путь до файла указывается первым аргументом в командной строке.
 
-В начале файла необходимо указать директиву
-
-```kotlin
-import ru.nsu.lupa.*
-```
-
 ### Идентификатор ресурса
 
 Строка, получаемое из доменного имени, путем удаления всего кроме названия.
@@ -68,7 +62,7 @@ import ru.nsu.lupa.*
 
 - ### `config`
 
-  Базовый контекст, обязателен в top-level файла.
+  Базовый контекст, доступен в top-level файла.
 
 - ### `profiles`
 
@@ -134,23 +128,19 @@ import ru.nsu.lupa.*
 4. В файле конфигурации для VK указываем эти параметры
 
 ```kotlin
-import ru.nsu.lupa.dsl.*
+profiles {
+    profile(
+        name = "Иван",
+        surname = "Иванов"
+    )
+}
 
-config {
-    profiles {
-        profile(
-            name = "Иван",
-            surname = "Иванов"
-        )
-    }
+/* ... */
 
-    /* ... */
-
-    parameters {
-        resource("vk") {
-            "accessToken" set "ВАШЕ_ЗНАЧЕНИЕ"
-            "userId" set "ВАШЕ_ЗНАЧЕНИЕ"
-        }
+parameters {
+    resource("vk") {
+        "accessToken" set "ВАШЕ_ЗНАЧЕНИЕ"
+        "userId" set "ВАШЕ_ЗНАЧЕНИЕ"
     }
 }
 ```

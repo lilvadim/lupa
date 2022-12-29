@@ -7,7 +7,6 @@ import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import ru.nsu.lupa.inject.AppModule
 import java.io.File
-import javax.script.ScriptEngineManager
 
 internal fun main(args: Array<String>) {
     val parser = ArgParser("lupa")
@@ -21,8 +20,7 @@ internal fun main(args: Array<String>) {
     parser.parse(args)
 
     val configFile = File(configPath)
-    val engine = ScriptEngineManager().getEngineByExtension("kts")
-    val config = engine.eval(configFile.readText()) as Configuration
+    val config = ConfigurationProvider().fromKtsFile(configFile)
 
     val inject = Guice.createInjector(object : AppModule() {
         @Singleton
