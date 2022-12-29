@@ -1,19 +1,22 @@
 package ru.nsu.lupa.dsl
 
 import ru.nsu.lupa.*
+import java.io.File
 
 @DslMarker
 annotation class ConfigurationDsl
 
 fun config(block: ConfigurationContext.() -> Unit): Configuration {
     val ctx = ConfigurationContext().apply(block)
-    return Configuration(ctx.parameters, ctx.profiles)
+    return Configuration(ctx.parameters, ctx.profiles, ctx.outputFile)
 }
 
 @ConfigurationDsl
 class ConfigurationContext {
     var parameters: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
     val profiles: MutableList<Profile> = mutableListOf()
+    var outputFile: File? = null
+
     fun parameters(block: ParametersContext.() -> Unit) {
         val ctx = ParametersContext().apply(block)
         this.parameters.putAll(ctx.map)
@@ -23,6 +26,7 @@ class ConfigurationContext {
         val ctx = ProfilesContext().apply(block)
         this.profiles.addAll(ctx.list)
     }
+
 }
 
 @ConfigurationDsl

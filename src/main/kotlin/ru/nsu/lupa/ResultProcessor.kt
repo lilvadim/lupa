@@ -7,5 +7,5 @@ interface ResultProcessor {
     /**
      * Convert match graph to list of chains from longest to shortest
      */
-    fun process(matchGraph: MatchGraph): List<ChainNode<Set<MatchCriteria>, Profile>>
+    fun process(matchGraph: MatchGraph, rootProfile: Profile): List<ChainNode<Set<MatchCriteria>, Profile>>
 }

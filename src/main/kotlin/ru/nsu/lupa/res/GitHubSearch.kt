@@ -4,10 +4,15 @@ import org.kohsuke.github.GHFileNotFoundException
 import org.kohsuke.github.GHUser
 import org.kohsuke.github.GitHub
 import ru.nsu.lupa.*
+import java.util.logging.Logger
+import javax.inject.Inject
 
-class GitHubSearch : Resource.BaseResource(homeUrl = "https://github.com/") {
+class GitHubSearch @Inject constructor(
+    private val logger: Logger
+) : Resource.BaseResource(homeUrl = "https://github.com/") {
+    private val g = GitHub.connectAnonymously()
+
     override fun performSearch(matchGraph: MatchGraph) {
-        val g = GitHub.connectAnonymously()
         for ((profile, _) in matchGraph.asAdjacencyList()) {
             if (profile.username == null) {
                 continue
@@ -15,6 +20,7 @@ class GitHubSearch : Resource.BaseResource(homeUrl = "https://github.com/") {
             val user: GHUser
             try {
                 user = g.getUser(profile.username.value)
+                logger.info(user.toString())
             } catch (e: GHFileNotFoundException) {
                 continue
             }

@@ -1,13 +1,19 @@
-profiles {
-    profile(
-        name = "Иван",
-        surname = "Иванов"
-    )
-}
+import java.io.File
 
-parameters {
-    resource("vk") {
-        "accessToken" set "<YOUR_VALUE>"
-        "userId" set "<YOUR_VALUE>"
+config {
+    profiles {
+        profile(
+            name = "Марк",
+            surname = "Бухнер"
+        )
     }
+
+    parameters {
+        resource("vk") {
+            "accessToken" set "<YOUR_VALUE>"
+            "userId" set "<YOUR_VALUE>"
+        }
+    }
+
+    outputFile = File("path/to/output/file.html")
 }

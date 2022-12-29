@@ -1,12 +1,13 @@
 package ru.nsu.lupa
 
+import ru.nsu.lupa.out.convertToHtml
 import javax.inject.Inject
 
 class App @Inject constructor(
     private val configuration: Configuration,
     private val searcher: Searcher,
     private val matchGraph: MatchGraph,
-//    private val resultSorter: ResultProcessor
+    private val resultProcessor: ResultProcessor
 ) : Runnable {
     override fun run() {
         configuration.profiles.forEach { matchGraph.addProfile(it) }
@@ -15,7 +16,10 @@ class App @Inject constructor(
     }
 
     private fun output(matchGraph: MatchGraph) {
-//        TODO вывод результата
-        matchGraph.asAdjacencyList().forEach { println(it) }
+        val outFile = configuration.outputFile
+        if (outFile != null) {
+            outFile.createNewFile()
+            outFile.writeText(convertToHtml(resultProcessor.process(matchGraph, configuration.profiles[0])))
+        }
     }
 }

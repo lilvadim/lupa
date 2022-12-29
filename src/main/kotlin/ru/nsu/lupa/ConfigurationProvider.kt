@@ -8,6 +8,6 @@ class ConfigurationProvider {
         val engine = ScriptEngineManager().getEngineByExtension("kts").apply {
             eval("import ru.nsu.lupa.dsl.*\n")
         }
-        return engine.eval("config { ${file.readText()} }") as Configuration
+        return engine.eval(file.readText()) as Configuration
     }
 }
