@@ -18,7 +18,7 @@ class ChainProcessor: ResultProcessor {
             return emptyList()
         }
         dfs(rootProfile, rootChainNode)
-        return chainList.sortedBy { (_, len) -> len }.map { (chain, _) -> chain }
+        return chainList.sortedBy { (_, len) -> len }.map { (chain, _) -> chain }.reversed()
     }
 
     private fun dfs(node: Profile, previousChainNode: ChainNode<Set<MatchCriteria>, Profile>) {

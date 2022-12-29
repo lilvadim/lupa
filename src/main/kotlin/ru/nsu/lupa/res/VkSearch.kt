@@ -7,9 +7,11 @@ import com.vk.api.sdk.objects.users.Fields
 import com.vk.api.sdk.queries.users.UsersGetQuery
 import com.vk.api.sdk.queries.users.UsersSearchQuery
 import ru.nsu.lupa.*
+import java.util.logging.Logger
 import javax.inject.Inject
 
 class VkSearch @Inject constructor(
+    private val logger: Logger,
     configuration: Configuration
 ) : Resource.BaseResource(homeUrl = "https://vk.com/") {
     private val parameters = configuration.parameters
@@ -28,14 +30,19 @@ class VkSearch @Inject constructor(
             }
             val response = UsersSearchQuery(vkClient, actor)
                 .q("${profile.name?.value ?: ""} ${profile.surname?.value ?: ""}")
+                .also { logger.info(it.toString()) }
                 .execute()
+            logger.info(response.toString())
+
             val profiles = response.items.map { user ->
-                Thread.sleep(500)
+                Thread.sleep(600)
                 val fullUser = UsersGetQuery(vkClient, actor)
                     .userIds(user.id.toString())
                     .fields(Fields.SCREEN_NAME)
+                    .also { logger.info(it.toString()) }
                     .execute()
                     .first()
+                logger.info(fullUser.toString())
                 Profile(
                     resourceUrl = homeUrl,
                     name = Name(fullUser.firstName),
