@@ -5,6 +5,12 @@ package ru.nsu.lupa
  */
 data class ChainNode<L, N>(
     val value: N,
-    val label: L,
-    val next: ChainNode<L, N>,
+    /**
+     * Null if there is no next node
+     */
+    val next: ChainNode<L, N>?,
+    /**
+     * Null if there is no next node
+     */
+    val label: L?
 )
