@@ -18,13 +18,21 @@ class ChainProcessor: ResultProcessor {
         g.forEach{ entry -> entry.value.forEach { cs.add(it.key) } }
         val rootProfile = g.keys.find { e -> !cs.contains(e) }
         rootChainNode = ChainNode(rootProfile!!, null, null)
+        if (g[rootProfile]!!.isEmpty()) {
+            return chainList
+        }
         dfs(rootProfile, rootChainNode)
         return chainList
     }
 
     private fun dfs(node: Profile, chainNode: ChainNode<Set<MatchCriteria>, Profile>) {
         if (g[node]!!.isEmpty()) {
-            chainList.add(rootChainNode)
+            var cCN = rootChainNode
+            while (cCN.next != null) {
+                cCN.next = cCN.next!!.copy()
+                cCN = cCN.next!!
+            }
+            chainList.add(rootChainNode.next!!)
             return
         }
         for (key in g[node]!!.keys) {
