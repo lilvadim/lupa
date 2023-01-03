@@ -128,19 +128,21 @@ fun performSearch(matchGraph: MatchGraph)
 4. В файле конфигурации для VK указываем эти параметры
 
 ```kotlin
-profiles {
-    profile(
-        name = "Иван",
-        surname = "Иванов"
-    )
-}
+config {
+    profiles {
+        profile(
+            name = "Иван",
+            surname = "Иванов"
+        )
+    }
 
-/* ... */
+    /* ... */
 
-parameters {
-    resource("vk") {
-        "accessToken" set "ВАШЕ_ЗНАЧЕНИЕ"
-        "userId" set "ВАШЕ_ЗНАЧЕНИЕ"
+    parameters {
+        resource("vk") {
+            "accessToken" set "ВАШЕ_ЗНАЧЕНИЕ"
+            "userId" set "ВАШЕ_ЗНАЧЕНИЕ"
+        }
     }
 }
 ```
